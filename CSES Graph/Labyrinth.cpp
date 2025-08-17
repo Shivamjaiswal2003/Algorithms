@@ -1,9 +1,19 @@
 #include "bits/stdc++.h"
 #define int long long
-// ... your other macros are fine ...
+#define uint unsigned long long
+#define vi vector<int>
+#define fr(i,n) for(int i=0; i<(n); i++)
+#define rep(i,a,n) for(int i=(a); i<=(n); i++)
+#define srt(v)  sort(v.begin(),v.end())      
+#define mxe(v)  *max_element(v.begin(),v.end())     
+#define mne(v)  *min_element(v.begin(),v.end())    
 
 using namespace std;
-int MOD=1e9+7;
+int MOD=1e9+7;     
+
+
+// ===================================END Of the Life ==========================================
+
 
 int dx[]={1, 0, -1, 0};
 int dy[]={0, 1, 0, -1};
@@ -83,14 +93,20 @@ void solve(){
     }
 }
 
+
 int32_t main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+ 
+ ios_base::sync_with_stdio(false);
+ cin.tie(NULL);
+
     int T = 1;
+    // cin >> T;
     while (T--)
     {
         solve();
     }
     return 0;
 }
+
+    
