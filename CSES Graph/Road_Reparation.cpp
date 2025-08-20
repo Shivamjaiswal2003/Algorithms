@@ -1,0 +1,160 @@
+#include "bits/stdc++.h"
+#define int long long
+#define uint unsigned long long
+#define vi vector<int>
+#define fr(i,n) for(int i=0; i<(n); i++)
+#define rep(i,a,n) for(int i=(a); i<=(n); i++)
+#define srt(v)  sort(v.begin(),v.end())      
+#define mxe(v)  *max_element(v.begin(),v.end())     
+#define mne(v)  *min_element(v.begin(),v.end())    
+
+using namespace std;
+int MOD=1e9+7;     
+
+
+// ===================================END Of the Life ==========================================
+
+class DisjointSet{
+    
+   
+   
+   public:
+   
+    vector<int> rank , parent, size;
+    
+    
+    DisjointSet(int n){
+        rank.resize(n+1, 0);
+        
+        parent.resize(n+1);
+        size.resize(n+1);
+        
+        for(int i=0; i<=n; i++){
+            parent[i]=i;
+            size[i]=1;
+        }
+    }
+    
+    
+    int FindPar(int node){
+        if(node == parent[node]) return node;
+        
+        return parent[node] = FindPar(parent[node]);
+    }
+    
+    
+    void UnionByRank(int u, int v){
+        
+        int ulp_u = FindPar(u);
+        int ulp_v = FindPar(v);
+        
+        if(ulp_u==ulp_v) return;
+        
+        if(rank[ulp_u]<rank[ulp_v]){
+            parent[ulp_u] = ulp_v;
+        }else{
+            
+            if(rank[ulp_v]<rank[ulp_u]){
+                parent[ulp_v] = ulp_u;
+            }else{
+            
+            parent[ulp_v] =ulp_u;
+            rank[ulp_u]++;
+          }
+        }
+    }
+    
+    
+        void UnionBySize(int u, int v){
+            int ulp_u = FindPar(u);
+            int ulp_v = FindPar(v);
+            
+            if(ulp_u== ulp_v) return;
+            
+            if(size[ulp_u]<size[ulp_v]){
+                size[ulp_v]+=size[ulp_u];
+                parent[ulp_u]= ulp_v;
+            }else{
+                    
+                    size[ulp_u]+=size[ulp_v];
+                    parent[ulp_v] = ulp_u;
+                
+            }
+        }
+};
+
+
+
+
+
+void solve(){
+    
+    int n, m;
+    cin>>n>>m;
+
+    vector<pair<int, pair<int, int>>> vp;
+
+    while(m--){
+        int u, v, w;
+        cin>>u>>v>>w;
+
+        vp.push_back({w, {u, v}});
+    }
+
+    int ans=0;
+
+    srt(vp);
+
+    DisjointSet ds(n);
+
+    for(auto it: vp){
+        int u=it.second.first;
+        int v=it.second.second;
+        int w=it.first;
+
+        int pu= ds.FindPar(u);
+        int pv=ds.FindPar(v);
+
+        if(pu==pv){
+            continue;
+        }else{
+            ds.UnionByRank(u, v);
+            ans+=w;
+        }
+    }
+
+    int cnt=0;
+
+    for(int i=1; i<=n; i++){
+        if(ds.parent[i]==i){
+           
+            cnt++;
+            if(cnt>=2){
+                cout<<"IMPOSSIBLE"<<endl;
+                return;
+            }
+
+        }
+    }
+
+
+    cout<<ans<<endl;
+    
+}
+
+int32_t main()
+{
+ 
+ ios_base::sync_with_stdio(false);
+ cin.tie(NULL);
+
+    int T = 1;
+    // cin >> T;
+    while (T--)
+    {
+        solve();
+    }
+    return 0;
+}
+
+    
