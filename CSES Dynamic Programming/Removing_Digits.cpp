@@ -15,18 +15,29 @@ int MOD=1e9+7;
 // ===================================END Of the Life ==========================================
 
 
-void bubbleSort(vector<int> &a){
-    int sizee= a.size();
-  
-    while(sizee>1){
-        for(int i=1; i<sizee; i++){
-             if(a[i]<a[i-1]){
-                swap(a[i], a[i-1]);
-             }
-        }
-        sizee--;
+int maxdigit(int n){
+    int maxi=0;
+
+    while(n){
+        maxi=max(maxi, n%10);
+        n/=10;
     }
 
+    return maxi;
+}
+
+
+int fun(int n,  vector<int> &dp){
+    if(n==0){
+        return 0;
+    }
+
+    if(dp[n]!=-1) return dp[n];
+    
+
+    int maxi=maxdigit(n);
+
+    return dp[n]= 1+fun(n-maxi, dp);
 }
 
 
@@ -35,18 +46,11 @@ void solve(){
     int n;
     cin >> n;
     
-    vector<int> a(n);
-    
-    for(int i=0; i<n; i++){
-         cin>>a[i];
-    }
+vector<int> dp(n+1, -1);
 
-    bubbleSort(a);
+    int ans= fun(n, dp);
+    cout<<ans<<endl;
 
-    for(auto it: a){
-    cout<<it<<" ";
-    }
-    cout<<endl;
     
 }
 

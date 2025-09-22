@@ -1,5 +1,5 @@
 #include "bits/stdc++.h"
-#define int long long
+// #define int long long
 #define uint unsigned long long
 #define vi vector<int>
 #define fr(i,n) for(int i=0; i<(n); i++)
@@ -9,44 +9,40 @@
 #define mne(v)  *min_element(v.begin(),v.end())    
 
 using namespace std;
-int MOD=1e9+7;     
+const int MOD=1e9+7;     
 
 
 // ===================================END Of the Life ==========================================
 
 
-void bubbleSort(vector<int> &a){
-    int sizee= a.size();
-  
-    while(sizee>1){
-        for(int i=1; i<sizee; i++){
-             if(a[i]<a[i-1]){
-                swap(a[i], a[i-1]);
-             }
-        }
-        sizee--;
-    }
 
-}
 
 
 void solve(){
-    
-    int n;
-    cin >> n;
-    
+ 
+    int n, x;
+    cin>>n>>x;
+
+
     vector<int> a(n);
     
     for(int i=0; i<n; i++){
          cin>>a[i];
     }
 
-    bubbleSort(a);
+    vector<int> dp(x+1, 0);
 
-    for(auto it: a){
-    cout<<it<<" ";
+    dp[0]=1;
+
+    for(int i=1; i<=x; i++){
+        for(int j=0; j<n; j++){
+            if(i-a[j]>=0){
+                dp[i]=(dp[i]+dp[i-a[j]])%MOD;
+            }
+        }
     }
-    cout<<endl;
+
+    cout<<dp[x]<<endl;
     
 }
 

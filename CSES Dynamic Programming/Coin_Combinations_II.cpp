@@ -9,44 +9,38 @@
 #define mne(v)  *min_element(v.begin(),v.end())    
 
 using namespace std;
-int MOD=1e9+7;     
+const int MOD=1e9+7;     
 
 
 // ===================================END Of the Life ==========================================
 
 
-void bubbleSort(vector<int> &a){
-    int sizee= a.size();
-  
-    while(sizee>1){
-        for(int i=1; i<sizee; i++){
-             if(a[i]<a[i-1]){
-                swap(a[i], a[i-1]);
-             }
-        }
-        sizee--;
-    }
 
-}
 
 
 void solve(){
-    
-    int n;
-    cin >> n;
-    
+ 
+    int n, x;
+    cin>>n>>x;
+
     vector<int> a(n);
     
     for(int i=0; i<n; i++){
          cin>>a[i];
     }
 
-    bubbleSort(a);
+    vector<int> dp(x+1, 0);
+    dp[0]=1;
 
-    for(auto it: a){
-    cout<<it<<" ";
+    for(int i=0; i<n; i++){
+        for(int j=1; j<=x; j++){
+            if(j-a[i]>=0){
+                dp[j]=( dp[j]+dp[j-a[i]])%MOD;
+            }
+        }
     }
-    cout<<endl;
+
+    cout<<dp[x]<<endl;
     
 }
 

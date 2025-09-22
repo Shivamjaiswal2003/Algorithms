@@ -14,20 +14,22 @@ int MOD=1e9+7;
 
 // ===================================END Of the Life ==========================================
 
+int fun(int n, vector<int> &dp){
+    if(n==0) return 1;
 
-void bubbleSort(vector<int> &a){
-    int sizee= a.size();
-  
-    while(sizee>1){
-        for(int i=1; i<sizee; i++){
-             if(a[i]<a[i-1]){
-                swap(a[i], a[i-1]);
-             }
+    if(dp[n]!=-1) return dp[n];
+
+    int ans=0;
+
+    for(int i=1; i<=6; i++){
+        if(n-i>=0){
+           ans= (ans+ fun(n-i, dp))%MOD;
         }
-        sizee--;
     }
 
+    return dp[n]= ans;
 }
+
 
 
 void solve(){
@@ -35,19 +37,12 @@ void solve(){
     int n;
     cin >> n;
     
-    vector<int> a(n);
-    
-    for(int i=0; i<n; i++){
-         cin>>a[i];
-    }
+    vector<int> dp(n+1, -1);
 
-    bubbleSort(a);
+    int ans= fun(n, dp);
 
-    for(auto it: a){
-    cout<<it<<" ";
-    }
-    cout<<endl;
-    
+    cout<<ans<<endl;
+
 }
 
 int32_t main()
